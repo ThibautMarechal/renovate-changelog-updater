@@ -4,6 +4,10 @@
   "description": "Automatic changelog update for dependency updates",
   "main": "index.js",
   "bin": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ThibautMarechal/renovate-changelog-updater.git"
+  },
   "scripts": {
     "ci": "npm-run-all lint check test",
     "check": "tsc",
