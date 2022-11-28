@@ -1,0 +1,6 @@
+{
+  "extends": ["@thimar"],
+  "env": {
+    "jest/globals": true
+  }
+}
