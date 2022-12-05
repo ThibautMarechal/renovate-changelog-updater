@@ -5,6 +5,7 @@ const process = require('process');
 const fs = require('fs/promises');
 const yargs = require('yargs');
 const updaters = require('./updaters');
+const { exit } = require('process');
 
 const parser = yargs(process.argv.slice(2))
   .options({
@@ -44,7 +45,16 @@ const parser = yargs(process.argv.slice(2))
 
 (async () => {
   const { format, path, depName, newVersion, currentVersion, ignoreFailure } = await parser.argv;
-  const changelogBuffer = await fs.readFile(path);
+  let changelogBuffer;
+  try{
+    changelogBuffer = await fs.readFile(path);
+  } catch (e) {
+    if (!ignoreFailure) {
+      throw e;
+    } else {
+      return;
+    }
+  }
   const changelogUpdater = updaters[format];
   if (!changelogUpdater) {
     throw new Error(`Unsupported changelog format "${format}"`);
