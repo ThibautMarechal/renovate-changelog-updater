@@ -1,5 +1,6 @@
 {
   "extends": ["@thimar"],
+  "plugins": ["jest"],
   "env": {
     "jest/globals": true
   }

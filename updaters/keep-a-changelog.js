@@ -2,7 +2,7 @@
 
 const { Release, Change, parser: keepAChangelogParser } = require('keep-a-changelog');
 
-const dependencyListTitle = 'Dependency updates'
+const dependencyListTitle = 'Dependency updates';
 
 /**
  *
@@ -11,8 +11,8 @@ const dependencyListTitle = 'Dependency updates'
  * @param {string} newVersion
  * @returns string
  */
-function getChangeDescription(depName, currentVersion, newVersion){
-  return `${depName}: ${currentVersion} -> ${newVersion}`
+function getChangeDescription(depName, currentVersion, newVersion) {
+  return `${depName}: ${currentVersion} -> ${newVersion}`;
 }
 
 /**

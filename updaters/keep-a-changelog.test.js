@@ -1,13 +1,12 @@
 // @ts-check
 
-const { updater } = require("./keep-a-changelog");
-const { Changelog, Release } = require("keep-a-changelog");
+const { updater } = require('./keep-a-changelog');
+const { Changelog, Release } = require('keep-a-changelog');
 
-const depName = "my-awesome-dependency";
+const depName = 'my-awesome-dependency';
 
 it('add the "UnReleased" released if not exist', () => {
-  expect(updater(new Changelog("My changelog").toString(), depName, "0", "1"))
-    .toMatchInlineSnapshot(`
+  expect(updater(new Changelog('My changelog').toString(), depName, '0', '1')).toMatchInlineSnapshot(`
     "# My changelog
 
     All notable changes to this project will be documented in this file.
@@ -24,12 +23,11 @@ it('add the "UnReleased" released if not exist', () => {
 });
 
 it('add the changed to the already existing "UnReleased"section', () => {
-  const changelog = new Changelog("My Changelog");
+  const changelog = new Changelog('My Changelog');
   const release = new Release();
-  release.addChange("fixed", "some fixes");
+  release.addChange('fixed', 'some fixes');
   changelog.addRelease(release);
-  expect(updater(changelog.toString(), depName, "0", "1"))
-    .toMatchInlineSnapshot(`
+  expect(updater(changelog.toString(), depName, '0', '1')).toMatchInlineSnapshot(`
     "# My Changelog
 
     All notable changes to this project will be documented in this file.
@@ -49,12 +47,11 @@ it('add the changed to the already existing "UnReleased"section', () => {
 });
 
 it('add the changed to the already existing "UnReleased"section', () => {
-  const changelog = new Changelog("My Changelog");
+  const changelog = new Changelog('My Changelog');
   const release = new Release();
-  release.addChange("fixed", "some fixes");
+  release.addChange('fixed', 'some fixes');
   changelog.addRelease(release);
-  expect(updater(changelog.toString(), depName, "0", "1"))
-    .toMatchInlineSnapshot(`
+  expect(updater(changelog.toString(), depName, '0', '1')).toMatchInlineSnapshot(`
     "# My Changelog
 
     All notable changes to this project will be documented in this file.
@@ -73,16 +70,12 @@ it('add the changed to the already existing "UnReleased"section', () => {
   `);
 });
 
-it("add the updated package to the dependency list if it already exist", () => {
-  const changelog = new Changelog("My Changelog");
+it('add the updated package to the dependency list if it already exist', () => {
+  const changelog = new Changelog('My Changelog');
   const release = new Release();
-  release.addChange(
-    "changed",
-    "Dependency updates\nanother-dependency: 4 -> 5"
-  );
+  release.addChange('changed', 'Dependency updates\nanother-dependency: 4 -> 5');
   changelog.addRelease(release);
-  expect(updater(changelog.toString(), depName, "0", "1"))
-    .toMatchInlineSnapshot(`
+  expect(updater(changelog.toString(), depName, '0', '1')).toMatchInlineSnapshot(`
     "# My Changelog
 
     All notable changes to this project will be documented in this file.
@@ -99,13 +92,12 @@ it("add the updated package to the dependency list if it already exist", () => {
   `);
 });
 
-it("update the dependency list if it already exist", () => {
-  const changelog = new Changelog("My Changelog");
+it('update the dependency list if it already exist', () => {
+  const changelog = new Changelog('My Changelog');
   const release = new Release();
-  release.addChange("changed", `Dependency updates\n${depName}: 0 -> 1`);
+  release.addChange('changed', `Dependency updates\n${depName}: 0 -> 1`);
   changelog.addRelease(release);
-  expect(updater(changelog.toString(), depName, "1", "2"))
-    .toMatchInlineSnapshot(`
+  expect(updater(changelog.toString(), depName, '1', '2')).toMatchInlineSnapshot(`
     "# My Changelog
 
     All notable changes to this project will be documented in this file.
@@ -121,16 +113,12 @@ it("update the dependency list if it already exist", () => {
   `);
 });
 
-it("doesnt remove line if someone messed up the dependency list updates", () => {
-  const changelog = new Changelog("My Changelog");
+it('doesnt remove line if someone messed up the dependency list updates', () => {
+  const changelog = new Changelog('My Changelog');
   const release = new Release();
-  release.addChange(
-    "changed",
-    `Dependency updates\nHello world!\nmy-another-dependency: 0 -> 1`
-  );
+  release.addChange('changed', `Dependency updates\nHello world!\nmy-another-dependency: 0 -> 1`);
   changelog.addRelease(release);
-  expect(updater(changelog.toString(), depName, "1", "2"))
-    .toMatchInlineSnapshot(`
+  expect(updater(changelog.toString(), depName, '1', '2')).toMatchInlineSnapshot(`
     "# My Changelog
 
     All notable changes to this project will be documented in this file.

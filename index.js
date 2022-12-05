@@ -29,6 +29,11 @@ const parser = yargs(process.argv.slice(2))
       default: 'keep-a-changelog',
       choices: Object.keys(updaters),
     },
+    'ignore-failure': {
+      type: 'boolean',
+      describe: 'Ignore errors',
+      default: false,
+    },
     path: {
       type: 'string',
       describe: 'The changelog file location',
@@ -38,11 +43,17 @@ const parser = yargs(process.argv.slice(2))
   .example('$0 --dep-name my-updated-package --current-version 1.0.0 --new-version 2.0.0', '');
 
 (async () => {
-  const { 'new-version': newVersion, 'current-version': currentVersion, 'dep-name': depName, format, path } = await parser.argv;
+  const { format, path, depName, newVersion, currentVersion, ignoreFailure } = await parser.argv;
   const changelogBuffer = await fs.readFile(path);
   const changelogUpdater = updaters[format];
   if (!changelogUpdater) {
     throw new Error(`Unsupported changelog format "${format}"`);
   }
-  await fs.writeFile(path, changelogUpdater(changelogBuffer.toString(), depName, currentVersion, newVersion));
+  try {
+    await fs.writeFile(path, changelogUpdater(changelogBuffer.toString(), depName, currentVersion, newVersion));
+  } catch (e) {
+    if (!ignoreFailure) {
+      throw e;
+    }
+  }
 })();

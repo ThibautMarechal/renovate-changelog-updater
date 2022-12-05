@@ -1,4 +1,4 @@
-# Renovate-changelog-parser
+# Renovate-changelog-updater
 
 How to use it ?
 ```
