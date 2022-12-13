@@ -2,7 +2,7 @@
 
 const { Release, Change, parser: keepAChangelogParser } = require('keep-a-changelog');
 
-const dependencyListTitle = 'Dependency updates';
+const dependencyListTitle = 'Dependency updates\\';
 
 /**
  *
@@ -12,7 +12,7 @@ const dependencyListTitle = 'Dependency updates';
  * @returns string
  */
 function getChangeDescription(depName, currentVersion, newVersion) {
-  return `${depName}: ${currentVersion} -> ${newVersion}`;
+  return `${depName}: ${currentVersion} -> ${newVersion}\\`;
 }
 
 /**
@@ -39,7 +39,7 @@ function keepAChangelogUpdater(changelogRaw, depName, currentVersion, newVersion
     unReleased.addChange('changed', dependendyChanged);
   } else {
     let alreadyUpdated = false;
-    const dependencyChangeRegex = /^(.*):\s(.*)\s->\s(.*)$/;
+    const dependencyChangeRegex = /^(.*):\s(.*)\s->\s(.*)\\$/;
     const previousTitle = dependendyChanged.title;
     dependendyChanged.title = dependencyListTitle;
     for (const update of previousTitle.split('\n').slice(1)) {
@@ -60,6 +60,7 @@ function keepAChangelogUpdater(changelogRaw, depName, currentVersion, newVersion
       dependendyChanged.title += `\n${getChangeDescription(depName, currentVersion, newVersion)}`;
     }
   }
+  dependendyChanged.title = dependendyChanged.title.replace(/\\$/g, '');
   return changelog.toString();
 }
 

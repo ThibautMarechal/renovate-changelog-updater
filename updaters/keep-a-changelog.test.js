@@ -16,7 +16,7 @@ it('add the "UnReleased" released if not exist', () => {
 
     ## Unreleased
     ### Changed
-    - Dependency updates
+    - Dependency updates\\
       my-awesome-dependency: 0 -> 1
     "
   `);
@@ -37,7 +37,7 @@ it('add the changed to the already existing "UnReleased"section', () => {
 
     ## Unreleased
     ### Changed
-    - Dependency updates
+    - Dependency updates\\
       my-awesome-dependency: 0 -> 1
 
     ### Fixed
@@ -61,7 +61,7 @@ it('add the changed to the already existing "UnReleased"section', () => {
 
     ## Unreleased
     ### Changed
-    - Dependency updates
+    - Dependency updates\\
       my-awesome-dependency: 0 -> 1
 
     ### Fixed
@@ -73,7 +73,7 @@ it('add the changed to the already existing "UnReleased"section', () => {
 it('add the updated package to the dependency list if it already exist', () => {
   const changelog = new Changelog('My Changelog');
   const release = new Release();
-  release.addChange('changed', 'Dependency updates\nanother-dependency: 4 -> 5');
+  release.addChange('changed', 'Dependency updates\nanother-dependency: 4 -> 5\\');
   changelog.addRelease(release);
   expect(updater(changelog.toString(), depName, '0', '1')).toMatchInlineSnapshot(`
     "# My Changelog
@@ -85,8 +85,8 @@ it('add the updated package to the dependency list if it already exist', () => {
 
     ## Unreleased
     ### Changed
-    - Dependency updates
-      another-dependency: 4 -> 5
+    - Dependency updates\\
+      another-dependency: 4 -> 5\\
       my-awesome-dependency: 0 -> 1
     "
   `);
@@ -95,7 +95,7 @@ it('add the updated package to the dependency list if it already exist', () => {
 it('update the dependency list if it already exist', () => {
   const changelog = new Changelog('My Changelog');
   const release = new Release();
-  release.addChange('changed', `Dependency updates\n${depName}: 0 -> 1`);
+  release.addChange('changed', `Dependency updates\n${depName}: 0 -> 1\\`);
   changelog.addRelease(release);
   expect(updater(changelog.toString(), depName, '1', '2')).toMatchInlineSnapshot(`
     "# My Changelog
@@ -107,7 +107,7 @@ it('update the dependency list if it already exist', () => {
 
     ## Unreleased
     ### Changed
-    - Dependency updates
+    - Dependency updates\\
       my-awesome-dependency: 0 -> 2
     "
   `);
@@ -116,7 +116,7 @@ it('update the dependency list if it already exist', () => {
 it('doesnt remove line if someone messed up the dependency list updates', () => {
   const changelog = new Changelog('My Changelog');
   const release = new Release();
-  release.addChange('changed', `Dependency updates\nHello world!\nmy-another-dependency: 0 -> 1`);
+  release.addChange('changed', `Dependency updates\nHello world!\nmy-another-dependency: 0 -> 1\\`);
   changelog.addRelease(release);
   expect(updater(changelog.toString(), depName, '1', '2')).toMatchInlineSnapshot(`
     "# My Changelog
@@ -128,9 +128,9 @@ it('doesnt remove line if someone messed up the dependency list updates', () => 
 
     ## Unreleased
     ### Changed
-    - Dependency updates
+    - Dependency updates\\
       Hello world!
-      my-another-dependency: 0 -> 1
+      my-another-dependency: 0 -> 1\\
       my-awesome-dependency: 1 -> 2
     "
   `);
