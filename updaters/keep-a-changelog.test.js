@@ -1,7 +1,7 @@
 // @ts-check
 
 const { updater } = require('./keep-a-changelog');
-const { Changelog, Release } = require('keep-a-changelog');
+const { Changelog, Release, parser } = require('keep-a-changelog');
 
 const depName = 'my-awesome-dependency';
 
@@ -95,7 +95,7 @@ it('add the updated package to the dependency list if it already exist', () => {
 it('update the dependency list if it already exist', () => {
   const changelog = new Changelog('My Changelog');
   const release = new Release();
-  release.addChange('changed', `Dependency updates\n${depName}: 0 -> 1\\`);
+  release.addChange('changed', `Dependency updates\n${depName}: 0 -> 1`);
   changelog.addRelease(release);
   expect(updater(changelog.toString(), depName, '1', '2')).toMatchInlineSnapshot(`
     "# My Changelog
