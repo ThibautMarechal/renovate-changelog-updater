@@ -39,15 +39,15 @@ function keepAChangelogUpdater(changelogRaw, depName, currentVersion, newVersion
     unReleased.addChange('changed', dependendyChanged);
   } else {
     let alreadyUpdated = false;
-    const dependencyChangeRegex = /^(.*):\s(.*)\s->\s(.*)\\?$/;
+    const dependencyChangeRegex = /^(.*):\s(.*)\s->\s([^\\\s]*)\\?$/;
     const previousTitle = dependendyChanged.title;
     dependendyChanged.title = dependencyListTitle;
     for (const update of previousTitle.split('\n').slice(1)) {
       const regexResult = dependencyChangeRegex.exec(update);
       if (regexResult) {
-        const [, updatedDepName, updateCurrentVersion] = regexResult;
+        const [, updatedDepName, updateCurrentVersion, updatedVersion] = regexResult;
         if (updatedDepName !== depName) {
-          dependendyChanged.title += `\n${update}`;
+          dependendyChanged.title += `\n${getChangeDescription(updatedDepName, updateCurrentVersion, updatedVersion)}`;
         } else {
           dependendyChanged.title += `\n${getChangeDescription(depName, updateCurrentVersion, newVersion)}`;
           alreadyUpdated = true;
