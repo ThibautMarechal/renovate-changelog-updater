@@ -24,7 +24,7 @@
   "devDependencies": {
     "@thimar/eslint-config": "^2.0.1",
     "@types/jest": "^29.2.3",
-    "@types/node": "^18.11.9",
+    "@types/node": "^20.0.0",
     "@types/yargs": "^17.0.15",
     "eslint": "^8.28.0",
     "eslint-plugin-jest": "^27.1.6",
