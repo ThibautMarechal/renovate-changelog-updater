@@ -2550,9 +2550,9 @@ json5@^2.2.2:
   integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
 
 keep-a-changelog@^2.1.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/keep-a-changelog/-/keep-a-changelog-2.3.0.tgz#97b41d0713a0fcd4367ee9b0250a0f968fc5024d"
-  integrity sha512-ETUAMEhHlECpaOwWNB6eZPFt4o2vkADIPtuNXZI46kOdsExkeRfWUiGPeMLSfztQHrNkAXDTbgud4HeWcIYIDA==
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/keep-a-changelog/-/keep-a-changelog-2.5.3.tgz#c80ae3677fa3fa30a432c4e6f50b28804279a584"
+  integrity sha512-ChMOZLbqdvxhdUIlKkA/UqU1PclcyR57bifjwkV/9/diYFUeHQeTaFkF3GWbXL1WYG/aZ5bJWg5pDLmC2NTycw==
   dependencies:
     "@deno/shim-deno" "~0.16.1"
 
