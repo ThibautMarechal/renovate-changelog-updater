@@ -65,7 +65,7 @@ function keepAChangelogUpdater(changelogRaw, depName, currentVersion, newVersion
   
   // Only proceed if the change description is valid (non-null)
   if (changeDescription !== null) {
-    let dependencyChange = unReleased.changes.get(category)?.find((change) => change.title.match(new RegExp(`^${dependencyListTitle}\\n?`)));
+    let dependendyChanged = unReleased.changes.get(category)?.find((change) => change.title.match(new RegExp(`^${dependencyListTitle}\\n?`)));
     if (!dependendyChanged) {
       dependendyChanged = new Change(`${dependencyListTitle}\n${changeDescription}`);
       unReleased.addChange(category, dependendyChanged);  
