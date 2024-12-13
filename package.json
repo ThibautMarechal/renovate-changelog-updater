@@ -1,6 +1,6 @@
 {
   "name": "umbralab-renovate-changelog-updater",
-  "version": "3.0.0",
+  "version": "2.1.1-dev",
   "description": "Automatic changelog update for dependency updates",
   "main": "index.js",
   "bin": {

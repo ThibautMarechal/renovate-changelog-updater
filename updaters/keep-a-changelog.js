@@ -1,6 +1,7 @@
 // @ts-check
 
 const { Release, Change, parser: keepAChangelogParser } = require('keep-a-changelog');
+const semver = require('semver'); // Add semver for version comparison
 
 const dependencyListTitle = 'Dependency updates\\';
 const terraformMaintenanceTitle = 'Lock file maintenance';
