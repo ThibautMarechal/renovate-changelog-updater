@@ -44,6 +44,14 @@ const parser = yargs(process.argv.slice(2))
 
 (async () => {
   const { format, path, depName, newVersion, currentVersion, ignoreFailure } = await parser.argv;
+  
+  try {
+    await fs.access(path);
+  } catch (e) {
+    console.error('CHANGELOG.md not found. Exiting.');
+    process.exit(1);
+  }
+  
   let changelogBuffer;
   try {
     changelogBuffer = await fs.readFile(path);
