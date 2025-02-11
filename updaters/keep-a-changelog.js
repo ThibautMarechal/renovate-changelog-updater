@@ -1,8 +1,10 @@
 // @ts-check
 
 const { Release, Change, parser: keepAChangelogParser } = require('keep-a-changelog');
+const semver = require('semver'); // Add semver for version comparison
 
 const dependencyListTitle = 'Dependency updates\\';
+const terraformMaintenanceTitle = 'Lock file maintenance';
 
 /**
  *
@@ -12,7 +14,30 @@ const dependencyListTitle = 'Dependency updates\\';
  * @returns string
  */
 function getChangeDescription(depName, currentVersion, newVersion) {
+  // Ensure all parts are valid and not empty
+  if (!depName || !currentVersion || !newVersion) {
+    return null; // Return null if any of the parameters are empty or invalid
+  }
   return `${depName}: ${currentVersion} -> ${newVersion}\\`;
+}
+
+/**
+ * Determines the semver category for the version change.
+ *
+ * @param {string} currentVersion
+ * @param {string} newVersion
+ * @returns {'changed' | 'added' | 'fixed'}
+ */
+function getSemverCategory(currentVersion, newVersion) {
+  if (semver.diff(currentVersion, newVersion) === 'major') {
+    return 'changed';
+  } else if (semver.diff(currentVersion, newVersion) === 'minor') {
+    return 'added';
+  } else if (semver.diff(currentVersion, newVersion) === 'patch') {
+    return 'fixed';
+  } else {
+    return 'changed';
+  }
 }
 
 /**
@@ -20,9 +45,10 @@ function getChangeDescription(depName, currentVersion, newVersion) {
  * @param {string} depName
  * @param {string} currentVersion
  * @param {string} newVersion
+ * @param {boolean} isLockFileMaintenance
  * @returns {string} the updated changelog
  */
-function keepAChangelogUpdater(changelogRaw, depName, currentVersion, newVersion) {
+function keepAChangelogUpdater(changelogRaw, depName, currentVersion, newVersion, isLockFileMaintenance) {
   const changelog = keepAChangelogParser(changelogRaw);
   const [firstRelease] = changelog.releases;
   let unReleased;
@@ -32,35 +58,50 @@ function keepAChangelogUpdater(changelogRaw, depName, currentVersion, newVersion
   } else {
     unReleased = firstRelease;
   }
-  const changedEntries = unReleased.changes.get('changed');
-  let dependendyChanged = changedEntries?.find((changed) => changed.title.match(new RegExp(`^${dependencyListTitle}\n?`)));
-  if (!dependendyChanged) {
-    dependendyChanged = new Change(`${dependencyListTitle}\n${getChangeDescription(depName, currentVersion, newVersion)}`);
-    unReleased.addChange('changed', dependendyChanged);
-  } else {
-    let alreadyUpdated = false;
-    const dependencyChangeRegex = /^(.*):\s(.*)\s->\s([^\\\s]*)\\?$/;
-    const previousTitle = dependendyChanged.title;
-    dependendyChanged.title = dependencyListTitle;
-    for (const update of previousTitle.split('\n').slice(1)) {
-      const regexResult = dependencyChangeRegex.exec(update);
-      if (regexResult) {
-        const [, updatedDepName, updateCurrentVersion, updatedVersion] = regexResult;
-        if (updatedDepName !== depName) {
-          dependendyChanged.title += `\n${getChangeDescription(updatedDepName, updateCurrentVersion, updatedVersion)}`;
+  
+  // Regular behavior for other dependencies
+  const category = getSemverCategory(currentVersion, newVersion);
+  const changeDescription = getChangeDescription(depName, currentVersion, newVersion);
+  
+  // Only proceed if the change description is valid (non-null)
+  if (changeDescription !== null) {
+    let dependendyChanged = unReleased.changes.get(category)?.find((change) => change.title.match(new RegExp(`^${dependencyListTitle}\\n?`)));
+    if (!dependendyChanged) {
+      dependendyChanged = new Change(`${dependencyListTitle}\n${changeDescription}`);
+      unReleased.addChange(category, dependendyChanged);  
+    } else {
+      let alreadyUpdated = false;
+      const dependencyChangeRegex = /^(.*):\s(.*)\s->\s([^\\\s]*)\\?$/;
+      const previousTitle = dependendyChanged.title;
+      dependendyChanged.title = dependencyListTitle;
+      for (const update of previousTitle.split('\n').slice(1)) {
+        const regexResult = dependencyChangeRegex.exec(update);
+        if (regexResult) {
+          const [, updatedDepName, updateCurrentVersion, updatedVersion] = regexResult;
+          if (updatedDepName !== depName) {
+            dependendyChanged.title += `\n${getChangeDescription(updatedDepName, updateCurrentVersion, updatedVersion)}`;
+          } else {
+            dependendyChanged.title += `\n${getChangeDescription(depName, updateCurrentVersion, newVersion)}`;
+            alreadyUpdated = true;
+          }
         } else {
-          dependendyChanged.title += `\n${getChangeDescription(depName, updateCurrentVersion, newVersion)}`;
-          alreadyUpdated = true;
+          dependendyChanged.title += `\n${update}`;
         }
-      } else {
-        dependendyChanged.title += `\n${update}`;
+      }
+      if (!alreadyUpdated) {
+        dependendyChanged.title += `\n${changeDescription}`;
       }
     }
-    if (!alreadyUpdated) {
-      dependendyChanged.title += `\n${getChangeDescription(depName, currentVersion, newVersion)}`;
+  dependendyChanged.title = dependendyChanged.title.replace(/\\$/g, '');
+  }
+  // Add changelog entry if lock file maintenance is performed
+  if (isLockFileMaintenance) {
+    // Find an existing "Terraform lock file maintenance" entry
+    let lockFileChange = unReleased.changes.get('added')?.find(change => change.title === terraformMaintenanceTitle);
+    if (!lockFileChange) {
+      unReleased.addChange('added', new Change(terraformMaintenanceTitle));
     }
   }
-  dependendyChanged.title = dependendyChanged.title.replace(/\\$/g, '');
   return changelog.toString();
 }
 
