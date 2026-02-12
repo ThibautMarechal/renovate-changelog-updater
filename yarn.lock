@@ -311,18 +311,18 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@deno/shim-deno-test@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@deno/shim-deno-test/-/shim-deno-test-0.4.0.tgz#2ff56821854c51323c0cd08a4a56d668f84367ba"
-  integrity sha512-oYWcD7CpERZy/TXMTM9Tgh1HD/POHlbY9WpzmAk+5H8DohcxG415Qws8yLGlim3EaKBT2v3lJv01x4G0BosnaQ==
+"@deno/shim-deno-test@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@deno/shim-deno-test/-/shim-deno-test-0.5.0.tgz#7d5dd221c736d182e587b8fd9bfca49b4dc0aa79"
+  integrity sha512-4nMhecpGlPi0cSzT67L+Tm+GOJqvuk8gqHBziqcUQOarnuIax1z96/gJHCSIz2Z0zhxE6Rzwb3IZXPtFh51j+w==
 
-"@deno/shim-deno@~0.16.1":
-  version "0.16.1"
-  resolved "https://registry.yarnpkg.com/@deno/shim-deno/-/shim-deno-0.16.1.tgz#f7d3925745c74337c83818de7d6435557c816c60"
-  integrity sha512-s9v0kzF5bm/o9TgdwvsraHx6QNllYrXXmKzgOG2lh4LFXnVMr2gpjK/c/ve6EflQn1MqImcWmVD8HAv5ahuuZQ==
+"@deno/shim-deno@~0.18.0":
+  version "0.18.2"
+  resolved "https://registry.yarnpkg.com/@deno/shim-deno/-/shim-deno-0.18.2.tgz#9fe2fe7c91062bf2d127204f3110c09806cbef92"
+  integrity sha512-oQ0CVmOio63wlhwQF75zA4ioolPvOwAoK0yuzcS5bDC1JUvH3y1GS8xPh8EOpcoDQRU4FTG8OQfxhpR+c6DrzA==
   dependencies:
-    "@deno/shim-deno-test" "^0.4.0"
-    which "^2.0.2"
+    "@deno/shim-deno-test" "^0.5.0"
+    which "^4.0.0"
 
 "@eslint-community/eslint-utils@^4.2.0":
   version "4.4.0"
@@ -2084,6 +2084,11 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
 
+isexe@^3.1.1:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/isexe/-/isexe-3.1.5.tgz#42e368f68d5e10dadfee4fda7b550bc2d8892dc9"
+  integrity sha512-6B3tLtFqtQS4ekarvLVMZ+X+VlvQekbe4taUkf/rhVO3d/h0M2rfARm/pXLcPEsjjMsFgrFgSrhQIxcSVrBz8w==
+
 istanbul-lib-coverage@^3.0.0, istanbul-lib-coverage@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/istanbul-lib-coverage/-/istanbul-lib-coverage-3.2.0.tgz#189e7909d0a39fa5a3dfad5b03f71947770191d3"
@@ -2550,11 +2555,11 @@ json5@^2.2.2:
   integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
 
 keep-a-changelog@^2.1.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/keep-a-changelog/-/keep-a-changelog-2.3.0.tgz#97b41d0713a0fcd4367ee9b0250a0f968fc5024d"
-  integrity sha512-ETUAMEhHlECpaOwWNB6eZPFt4o2vkADIPtuNXZI46kOdsExkeRfWUiGPeMLSfztQHrNkAXDTbgud4HeWcIYIDA==
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/keep-a-changelog/-/keep-a-changelog-2.8.0.tgz#1dccc7ca7b0d5f9b3ea09a8ea65447c964cb5a86"
+  integrity sha512-RG9LRYRPy9jxBD/TRGoTwOAsWLF8iMcWFnQZP78MZk5a5TgCH9ceLy2wgpHGQHKp7jfAqS//1aj5Gu7U6/+PrA==
   dependencies:
-    "@deno/shim-deno" "~0.16.1"
+    "@deno/shim-deno" "~0.18.0"
 
 keyv@^4.5.3:
   version "4.5.4"
@@ -3443,12 +3448,19 @@ which@^1.2.9:
   dependencies:
     isexe "^2.0.0"
 
-which@^2.0.1, which@^2.0.2:
+which@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/which/-/which-2.0.2.tgz#7c6a8dd0a636a0327e10b59c9286eee93f3f51b1"
   integrity sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==
   dependencies:
     isexe "^2.0.0"
+
+which@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/which/-/which-4.0.0.tgz#cd60b5e74503a3fbcfbf6cd6b4138a8bae644c1a"
+  integrity sha512-GlaYyEb07DPxYCKhKzplCWBJtvxZcZMrL+4UkrTSJHHPyZU4mYYTv3qaOe77H7EODLSSopAUFAc6W8U4yqvscg==
+  dependencies:
+    isexe "^3.1.1"
 
 wrap-ansi@^7.0.0:
   version "7.0.0"
